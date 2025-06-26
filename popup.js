@@ -290,10 +290,18 @@ function displayResults(rawData) {
   const explanation = document.getElementById('explanation');
   const sources = document.getElementById('sources');
   const loading = document.getElementById('loading');
+  const disclaimer = document.getElementById('disclaimer');
+
   // Hide loader
   loading.style.display = 'none';
   // Show results container
   resultContainer.style.display = 'block';
+
+  // Hide disclaimer by default
+  if (disclaimer) {
+    disclaimer.style.display = 'none';
+  }
+
   // Parse AI response if needed
   const data = parseAIResponse(rawData);
   // Handle error cases
@@ -326,13 +334,15 @@ function displayResults(rawData) {
   }
   // Set verification result for successful analysis
   if (data.isFake === true) {
-    verificationResult.innerHTML = '<span class="result-icon">\u274c</span> Potential Fake News';
+    verificationResult.innerHTML = '<span class="result-icon">❌</span> Potential Fake News';
     verificationResult.className = 'result-header result-fake';
+    if (disclaimer) disclaimer.style.display = 'block';
   } else if (data.isFake === false) {
-    verificationResult.innerHTML = '<span class="result-icon">\u2705</span> Reliable Content';
+    verificationResult.innerHTML = '<span class="result-icon">✅</span> Reliable Content';
     verificationResult.className = 'result-header result-real';
+    if (disclaimer) disclaimer.style.display = 'block';
   } else {
-    verificationResult.innerHTML = '<span class="result-icon">\u26a0\ufe0f</span> Error';
+    verificationResult.innerHTML = '<span class="result-icon">⚠️</span> Error';
     verificationResult.className = 'result-header result-error';
   }
   // Format explanation safely
