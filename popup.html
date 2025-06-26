@@ -302,7 +302,7 @@
       font-size: 15px;
       line-height: 1.7;
       color: var(--gray-700);
-      background: var(--white);
+      background: #f8fbff;
       border-bottom: 1px solid #e0eaff;
       animation: fadeIn 1s cubic-bezier(0.4,0,0.2,1);
       word-break: break-word;
@@ -316,8 +316,16 @@
       font-size: 14px;
       color: var(--gray-600);
       border-top: 1px solid #e0eaff;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
       animation: fadeIn 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    .disclaimer {
+      padding: 16px 24px;
+      background: #f8fbff;
+      font-size: 12px;
+      color: var(--gray-500);
+      border-top: 1px solid #e0eaff;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     }
     
     .sources-title {
@@ -356,7 +364,6 @@
       justify-content: center;
       align-items: center;
       box-shadow: 0 -2px 12px 0 #3b82f61a;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     }
     
     .footer-buttons {
@@ -508,6 +515,9 @@
       <div id="sources" class="sources">
         <div class="sources-title">📋 Sources and details:</div>
         <div id="sources-content"></div>
+      </div>
+      <div id="disclaimer" class="disclaimer" style="display: none;">
+        <strong>Disclaimer:</strong> The analysis provided by artificial intelligence may not always be accurate or error-free.
       </div>
     </div>
   </div>
