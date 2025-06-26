@@ -4,10 +4,10 @@
  * Class that manages communication with an AI historical analysis service
  */
 class HistoryPilotCheckerAPI {
-  constructor(apiKey) {
+  constructor(apiKey, model) {
     this.apiKey = apiKey;
     this.baseUrl = "https://openrouter.ai/api/v1/chat/completions";
-    this.model = "mistralai/mistral-small-3.2-24b-instruct-2506:free";
+    this.model = model;
     this.yourSiteUrl = "http://localhost:3000"; // Enter your site URL here or leave localhost for development
   }
 

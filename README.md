@@ -1,12 +1,43 @@
 # HistoryPilot
-HistoryPilot is a web extension for chromium-based browsers that lets you instantly verify any historical fact you come across using AI. It's a great tool for students, researchers, or enthusiasts.
 
-1.How to use HistoryPilot:
+**HistoryPilot** is a web extension for Chromium-based browsers that lets you instantly verify any historical fact using AI. It's an ideal companion for students, researchers, and history enthusiasts who want fast, reliable context on the fly.
 
-2.Setup your API key from the settings page
+## Features
 
-3.Select the historical fact you want to analyse on a web page
+- Analyze historical facts directly from web pages  
+- AI-powered insights and fact-checking  
+- Works across all major Chromium-based browsers  
 
-4.Right-click and select "Analyze with HistoryPilot"
+## How to Install
 
-5.Wait for the analysis
+### Chrome
+1. Go to `chrome://extensions`
+2. Enable **Developer mode** (top right)
+3. Click **Load unpacked**
+4. Select the folder where you cloned/downloaded this extension
+
+### Edge
+1. Go to `edge://extensions`
+2. Enable **Developer mode**
+3. Click **Load unpacked**
+4. Choose the extension folder
+
+### Opera
+1. Go to `opera://extensions`
+2. Enable **Developer Mode** at the top
+3. Click **Load unpacked**
+4. Select the extension folder
+
+## Setup Instructions
+
+1. Open the extension options page
+2. Enter your API key
+3. **Select a model** to use for analysis
+4. Save your settings
+
+## How to Use
+
+1. Select a historical claim or sentence on any webpage  
+2. Right-click and choose **"Analyze with HistoryPilot"**  
+3. Wait a few seconds while the AI evaluates the statement  
+4. View a concise analysis with historical references and context  

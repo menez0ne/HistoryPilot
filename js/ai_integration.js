@@ -2,7 +2,7 @@
  * Class that manages AI integration for fact checking
  */
 class HistoryPilotAIChecker {
-  constructor(apiKey = null) {
+  constructor(apiKey = null, model = 'mistralai/mistral-small-3.2-24b-instruct-2506:free') {
     if (!apiKey || apiKey.trim() === '') {
       throw new Error('API key required for the extension to work');
     }
@@ -10,7 +10,7 @@ class HistoryPilotAIChecker {
     if (typeof HistoryPilotCheckerAPI === 'undefined') {
       throw new Error('HistoryPilotCheckerAPI not available');
     }
-    this.api = new HistoryPilotCheckerAPI(apiKey);
+    this.api = new HistoryPilotCheckerAPI(apiKey, model);
     this.contextData = {};
     this.apiKey = apiKey;
   }

@@ -1,6 +1,3 @@
-// Background script with AI mode only
-
-// Import necessary modules correctly for service worker
 try {
   importScripts('api_js.js', 'ai_integration.js');
   console.log('Modules loaded successfully');
@@ -82,8 +79,8 @@ function parseAndCleanAIResult(rawResult) {
 async function loadSettings() {
   return new Promise((resolve) => {
     chrome.storage.sync.get({
-      // Default values (analysisMode removed)
       apiKey: '',
+      aiModel: 'mistralai/mistral-small-3.2-24b-instruct-2506:free',
       showNotifications: true,
       highlightText: true
     }, function(items) {
@@ -154,7 +151,7 @@ async function initializeExtension() {
   // Initialize analyzer with API key if class is available
   if (typeof HistoryPilotAIChecker !== 'undefined' && settings.apiKey) {
     try {
-      historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey);
+      historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey, settings.aiModel);
       console.log('Analyzer initialized with API key');
     } catch (error) {
       console.error('Error initializing:', error);
@@ -195,7 +192,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       });
       
       if (settings.showNotifications) {
-        showNotification(false, "API key required", "Configure the API key in the settings");
+        showNotification(null, "API key required", "Configure the API key in the settings");
       }
       
       return;
@@ -235,7 +232,7 @@ async function analyzeContent(text, pageContext, tabId) {
     
     // Always recreate the analyzer with the current API key
     if (typeof HistoryPilotAIChecker !== 'undefined' && settings.apiKey) {
-      historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey);
+      historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey, settings.aiModel);
     } else {
       throw new Error('AI modules not available');
     }
@@ -341,24 +338,36 @@ async function analyzeContent(text, pageContext, tabId) {
 // Function to show a notification to the user
 function showNotification(isFake, analysisMethod = "Analysis completed", customMessage = null) {
   if (!settings.showNotifications) return;
-
+  
   let message;
   if (customMessage) {
     message = customMessage;
   } else if (isFake === true) {
     message = "The analyzed content does not appear to be historically accurate.";
   } else if (isFake === false) {
-    message = "The analyzed content appears Historically Accurate.";
+    message = "The analyzed content appears to be historically accurate.";
+  } else if (isFake === null) {
+    message = "The analysis was inconclusive. Manual verification is recommended.";
   } else {
-    message = "Analysis failed: an error occurred during verification.";
+    message = "Analysis completed with an unknown result.";
   }
 
-  chrome.notifications.create({
+  // Use a consistent ID to prevent multiple notifications from stacking up.
+  const notificationId = "historyPilotAnalysisResult";
+
+  chrome.notifications.create(notificationId, {
     type: "basic",
     iconUrl: "images/icon128.png",
     title: "HistoryPilot - " + analysisMethod,
     message: message,
     priority: 2
+  }, () => {
+    if (chrome.runtime.lastError) {
+      console.error(
+        `Notification error: ${chrome.runtime.lastError.message}. ` +
+        `This often means the "notifications" permission is missing from your manifest.json file.`
+      );
+    }
   });
 }
 
@@ -373,7 +382,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // Reinitialize analyzer with new API key if available
     if (typeof HistoryPilotAIChecker !== 'undefined' && settings.apiKey) {
       try {
-        historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey);
+        historyPilotChecker = new HistoryPilotAIChecker(settings.apiKey, settings.aiModel);
         console.log('Analyzer reinitialized with new settings');
       } catch (error) {
         console.error('Error reinitializing:', error);
@@ -417,7 +426,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     
     // Reinitialize analyzer with new API key if available
     if (typeof HistoryPilotAIChecker !== 'undefined' && newApiKey) {
-      historyPilotChecker = new HistoryPilotAIChecker(newApiKey);
+      historyPilotChecker = new HistoryPilotAIChecker(newApiKey, settings.aiModel);
       console.log('Analyzer reinitialized with new settings');
     }
   }
