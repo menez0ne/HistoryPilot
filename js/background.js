@@ -357,7 +357,7 @@ function showNotification(isFake, analysisMethod = "Analysis completed", customM
 
   chrome.notifications.create(notificationId, {
     type: "basic",
-    iconUrl: "images/icon128.png",
+    iconUrl: chrome.runtime.getURL("images/icon128.png"),
     title: "HistoryPilot - " + analysisMethod,
     message: message,
     priority: 2
