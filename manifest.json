@@ -20,13 +20,13 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "js/background.js"
    
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content_script.js"],
+      "js": ["js/content_script.js"],
       "run_at": "document_end"
     }
   ],
@@ -45,7 +45,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["history.html", "history.css", "history.js"],
+      "resources": ["history.html", "css/history.css", "js/history.js"],
       "matches": ["<all_urls>"]
     }
   ],
