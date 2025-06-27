@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="./images/logo.png" width="500"/>
+</p>
+
+
 ### 🔍 What is HistoryPilot?  
 **HistoryPilot** is a browser extension for Chromium-based browsers that helps you instantly verify historical facts using AI. Perfect for students, researchers, and the historically curious.
 
